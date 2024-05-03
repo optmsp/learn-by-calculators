@@ -1,0 +1,23 @@
+loop:
+    show prompt
+    get input as userInput
+
+    if userInput is Quit; then
+        quit program
+    end-if
+
+    if userInput is Help; then
+        showHelp
+        continue-loop
+    end-if
+
+    parse userInput as postfix-notation
+    if bad-input; then
+        showErrorMessage
+        continue-loop
+    end-if
+
+    compute result
+    display result
+
+    continue-loop

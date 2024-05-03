@@ -1,0 +1,8 @@
+overview
+https://diveintopython3.problemsolving.io/index.html
+
+input/output
+https://opensource.com/article/17/5/4-practical-python-libraries
+
+parsing postfix notation
+https://www2.cs.sfu.ca/CourseCentral/125/tjd/postfix.html
