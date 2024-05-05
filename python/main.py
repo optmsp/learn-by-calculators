@@ -2,28 +2,29 @@ import re
 
 MODES = ['postfix', 'prefix', 'infix']
 MODE_DEFAULT = 'postfix'
-OPERATIONS = ['+', '-', '*', '/']
-
-WHITESPACE = [' ', "\n", "\t"]
-PRE_GROUP = ['(']
-POST_GROUP = [')']
+ALL_OPS = ['+', '-', '*', '/']
+HP_OPS = ['*', '/']
+LP_OPS = ['+', '-']
+PRE_GROUP_TOKEN = '('
+POST_GROUP_TOKEN = ')'
 
 
 def display_help():
-    print('Operations:')
+    print('OPS:')
     print('quit - exit the program')
     print('exit - exit the program')
     print('mode - postfix/prefix/infix')
     print('')
 
 
-def output_to_user(str):
-    print(str)
+def display_output(input_string):
+    print(input_string)
     print('')
 
 
 def perform_arithmetic(stack, operation):
     value = 0
+
     match operation:
         case '+':
             op2 = stack.pop()
@@ -59,47 +60,44 @@ def get_calculated_value_postfix(tokens):
 
         if (token.isnumeric()):
             stack.append(float(token))
-        elif (token in OPERATIONS):
+        elif (token in ALL_OPS):
             stack.append(perform_arithmetic(stack, token))
-        elif (token in PRE_GROUP):
+        elif (token == PRE_GROUP_TOKEN):
             stack.append(get_calculated_value_postfix(tokens))
-        elif (token in POST_GROUP):
+        elif (token == POST_GROUP_TOKEN):
             break
         else:
             raise ValueError("Invalid character in input: " + token)
 
-    if (len(stack) != 1):
-        raise ValueError("stack is wrong len: ", len(stack))
-
     return stack.pop()
 
 
-def get_calculated_value_prefix(str):
+def get_calculated_value_prefix(input_string):
     raise ValueError("not implemented")
 
 
-def get_calculated_value_infix(str):
+def get_calculated_value_infix(input_string):
     raise ValueError("not implemented")
 
 
-def tokenizer(input):
-    return re.split('\s+', input)
+def tokenizer(input_string):
+    return re.split('\s+', input_string)
 
 
-def get_calculated_value(str, mode):
+def get_calculated_value(input_string, mode):
     match mode:
         case 'postfix':
-            tokens = tokenizer(str)
+            tokens = tokenizer(input_string)
             value = get_calculated_value_postfix(tokens)
 
         case 'prefix':
-            value = get_calculated_value_prefix(str)
+            value = get_calculated_value_prefix(input_string)
 
         case 'infix':
-            value = get_calculated_value_infix(str)
+            value = get_calculated_value_infix(input_string)
 
         case _:
-            output_to_user('Invalid mode: ' + mode)
+            display_output('Invalid mode: ' + mode)
 
     return value
 
@@ -112,9 +110,9 @@ def clean_string(input):
 def get_new_mode(old_mode):
     mode = clean_string(input('Enter a mode> '))
     if mode in MODES:
-        output_to_user('Entering mode: ' + mode)
+        display_output('Entering mode: ' + mode)
     else:
-        output_to_user('Invalid mode: ' + new_mode)
+        display_output('Invalid mode: ' + new_mode)
         mode = old_mode
 
     return mode
@@ -125,10 +123,10 @@ if __name__ == '__main__':
     mode = MODE_DEFAULT
 
     while True:
-        # str = clean_string(input('Enter an operation> '))
-        # str = '1 1 + 2 * 3 /'
-        str = '( 1 2 * ) 2 + ( 3 2 / ) *'
-        match str:
+        input_string = clean_string(input('Enter an operation> '))
+        # input_string = '( 1 2 * 5 + ) 5 + 2 *'
+
+        match input_string:
             case 'exit':
                 break
 
@@ -142,8 +140,6 @@ if __name__ == '__main__':
                 mode = get_new_mode(mode)
 
             case _:
-                output_to_user(f'Calculating: ' + str)
-                value = get_calculated_value(str, mode)
-                output_to_user(f'Value: {value}')
-
-        break
+                display_output(f'Calculating: ' + input_string)
+                value = get_calculated_value(input_string, mode)
+                display_output(f'Value: {value}')
