@@ -2,8 +2,8 @@ import re
 
 MODES = ['postfix', 'prefix', 'infix']
 MODE_DEFAULT = 'postfix'
-ALL_OPS = ['+', '-', '*', '/']
-HP_OPS = ['*', '/']
+ALL_OPS = ['+', '-', '*', '/', '^', 'sqrt', '%']
+HP_OPS = ['*', '/', '^', 'sqrt', '%']
 LP_OPS = ['+', '-']
 PRE_GROUP_TOKEN = '('
 POST_GROUP_TOKEN = ')'
@@ -45,6 +45,20 @@ def perform_arithmetic(stack, operation):
             op2 = stack.pop()
             op1 = stack.pop()
             value = op1 / op2
+
+        case '^':
+            op2 = stack.pop()
+            op1 = stack.pop()
+            value = op1 ** op2
+
+        case 'sqrt':
+            op1 = stack.pop()
+            value = op1 ** 0.5
+
+        case '%':
+            op2 = stack.pop()
+            op1 = stack.pop()
+            value = op1 % op2
 
         case _:
             raise ValueError("Operation is invalid: " + operation)
@@ -123,8 +137,12 @@ if __name__ == '__main__':
     mode = MODE_DEFAULT
 
     while True:
-        input_string = clean_string(input('Enter an operation> '))
+        # input_string = clean_string(input('Enter an operation> '))
         # input_string = '( 1 2 * 5 + ) 5 + 2 *'
+        # input_string = '2 2 ^'
+        # input_string = '5 sqrt 5 %'
+        # input_string = '4 3 %'
+        input_string = '( 1 2 * 5 + ) 5 + 2 * 2 sqrt *'
 
         match input_string:
             case 'exit':
@@ -143,3 +161,5 @@ if __name__ == '__main__':
                 display_output(f'Calculating: ' + input_string)
                 value = get_calculated_value(input_string, mode)
                 display_output(f'Value: {value}')
+
+        break
