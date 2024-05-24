@@ -86,14 +86,6 @@ def get_calculated_value_postfix(tokens):
     return stack.pop()
 
 
-def get_calculated_value_prefix(input_string):
-    raise ValueError("not implemented")
-
-
-def get_calculated_value_infix(input_string):
-    raise ValueError("not implemented")
-
-
 def tokenizer(input_string):
     return re.split('\s+', input_string)
 
@@ -105,10 +97,10 @@ def get_calculated_value(input_string, mode):
             value = get_calculated_value_postfix(tokens)
 
         case 'prefix':
-            value = get_calculated_value_prefix(input_string)
+            raise ValueError("not implemented")
 
         case 'infix':
-            value = get_calculated_value_infix(input_string)
+            raise ValueError("not implemented")
 
         case _:
             display_output('Invalid mode: ' + mode)
@@ -137,12 +129,7 @@ if __name__ == '__main__':
     mode = MODE_DEFAULT
 
     while True:
-        # input_string = clean_string(input('Enter an operation> '))
-        # input_string = '( 1 2 * 5 + ) 5 + 2 *'
-        # input_string = '2 2 ^'
-        # input_string = '5 sqrt 5 %'
-        # input_string = '4 3 %'
-        input_string = '( 1 2 * 5 + ) 5 + 2 * 2 sqrt *'
+        input_string = clean_string(input('Enter an operation> '))
 
         match input_string:
             case 'exit':
@@ -161,5 +148,3 @@ if __name__ == '__main__':
                 display_output(f'Calculating: ' + input_string)
                 value = get_calculated_value(input_string, mode)
                 display_output(f'Value: {value}')
-
-        break
