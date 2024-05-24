@@ -37,14 +37,16 @@ We'll start with a basic calculator (add, subtract, multiply, divide). Over time
 
 # Languages
 
- * Python
- * Ruby
- * C# 
- * JavaScript 
- * Java 
- * Go/Golang 
- * Swift 
- * Kotlin 
- * C 
- * C++
- * x86 ASM
+|Language  |Phase 1  |Phase 2	|Phase 3|Phase 4|
+|--|--|--|--|--|
+|Python  |  x|	| 	|
+|Ruby|  |	| 	|
+|C#  |  |	| 	|
+|JavaScript  |  |	| 	|
+|Java  |  |	| 	|
+|Go/Golang  |  |	| 	|
+|Swift  |  |	| 	|
+|Kotlin  |  |	| 	|
+|C  |  |	| 	|
+|C++  |  |	| 	|
+|x86 ASM  |  |	| 	|
